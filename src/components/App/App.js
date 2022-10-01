@@ -1,7 +1,8 @@
-import {HashRouter as Router, Route} from 'react-router-dom';
+import {HashRouter as Router, Route, Redirect} from 'react-router-dom';
 import './App.css';
 import MovieList from '../MovieList/MovieList'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import MovieDetails from '../MovieDetails/MovieDetails';
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
         contrastText: '#FFFFFF',
       },
       background: {
-        paper: '#F4F5F5',
+        card: '#cce3de',
       }
     },
   });
@@ -31,11 +32,13 @@ function App() {
       <h1>The Movies Saga!</h1>
       <ThemeProvider theme={theme}>
         <Router>        
-          <Route path="/" exact>
+          <Redirect from="/" to="/movielist" />
+          <Route path="/movielist" exact>
             <MovieList />
           </Route>
-          
-          {/* Details page */}
+          {/* <Route path="/details/:id" exact>
+            <MovieDetails />
+          </Route> */}
 
           {/* Add Movie page */}
         </Router>
