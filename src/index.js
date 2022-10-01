@@ -26,9 +26,28 @@ function* fetchAllMovies() {
     
 }
 
+function* getMovieDetails(action){
+    const movieId = action.payload;
+    try{
+        const movieDetails = yield axios({
+            method: 'GET',
+            url: `/api/movie/${movieId}`
+        })
+        yield put({
+            type: 'SET_MOVIE_DETAILS',
+            payload: movieDetails.data
+        })
+    }catch {
+        console.log('get details error');
+    }
+}
+
+
+
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
+    yield takeEvery('SAGA_GET_DETAILS', getMovieDetails);
 }
 
 // Used to store movies returned from the server
@@ -39,6 +58,17 @@ const movies = (state = [], action) => {
             default:
                 return state;
             }
+}
+
+const movieDetails = (state = {}, action)=> {
+    switch(action.type){
+        case 'SET_MOVIE_DETAILS':
+            return action.payload
+        case 'CLEAR_DETAILS':
+            return {};
+        default:
+            return state;
+    }
 }
         
         
@@ -60,6 +90,7 @@ const storeInstance = createStore(
     combineReducers({
         movies,
         genres,
+        movieDetails,
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
