@@ -33,18 +33,23 @@ export default function MovieDetails(){
     console.log(movieDetails);
     return(
         <Card sx={{ display: 'flex' }}>
+            <img src={movieDetails.poster}/>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
-                <Typography component="div" variant="h5">
-                    Live From Space
+                <Typography component="div" variant="h4">
+                    {movieDetails.title}
                 </Typography>
-                <Typography variant="subtitle1" color="text.secondary" component="div">
-                    Mac Miller
+                <Typography className="detailsText" variant="subtitle1" color="text.secondary" component="div">
+                    {movieDetails.description}
+                </Typography>
+                <Typography className="genres" variant="h6" color="text.secondary" component="div">
+                    Genres:
                 </Typography>
                 </CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
                 </Box>
             </Box>
+        
         </Card>
     )
 }

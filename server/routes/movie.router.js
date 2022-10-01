@@ -65,7 +65,7 @@ router.get('/:id', (req, res)=> {
   const sqlValues = [movieId]
   pool.query(sqlQuery, sqlValues)
       .then( dbRes=> {
-        res.send(dbRes.rows);
+        res.send(dbRes.rows[0]);
       }).catch(err => {
         console.log('error in GET /api/movie/:id',err);
         res.sendStatus(500)
