@@ -33,6 +33,10 @@ function* getMovieDetails(action){
             method: 'GET',
             url: `/api/movie/${movieId}`
         })
+        yield put({
+            type: 'SET_MOVIE_DETAILS',
+            payload: movieDetails.data
+        })
     }catch {
         console.log('get details error');
     }

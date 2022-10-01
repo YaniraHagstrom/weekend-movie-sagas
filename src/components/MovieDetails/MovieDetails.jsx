@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 export default function MovieDetails(){
     const dispatch = useDispatch();
     const params = useParams();
+    const movieDetails = useSelector(store => store.movieDetails);
     // send requests to index.js to retrieve:    
         // 1. all the data from the movies table for given id
         // 2. all the genres for the movie
@@ -29,7 +30,7 @@ export default function MovieDetails(){
         }
     },[movieId])
     // if 👆 changes, then the return function will run which clears the reducer so there is no previous data when the page is loaded for another id. 
-
+    console.log(movieDetails);
     return(
         <Card sx={{ display: 'flex' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
