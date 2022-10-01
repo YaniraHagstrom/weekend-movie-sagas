@@ -24,7 +24,7 @@ export default function MovieDetails(){
         })
         return()=> {
             dispatch({
-                type: 'SAGA_CLEAR_DETAILS'
+                type: 'CLEAR_DETAILS'
             })
         }
     },[movieId])
