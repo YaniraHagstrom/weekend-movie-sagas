@@ -1,4 +1,9 @@
 .movies {
-    display : flex;
+    display: flex;
     flex-wrap: wrap;
+}
+
+.MuiCardContent-root {
+    margin-left: 10px;
+    margin-right: 10px;
 }
