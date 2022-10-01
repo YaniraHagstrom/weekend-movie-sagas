@@ -9,23 +9,34 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
         // 👆 pulls the id parameter used to route to the detail page
 
+import './MovieDetails.css';
 
 export default function MovieDetails(){
     const dispatch = useDispatch();
     const params = useParams();
     const movieDetails = useSelector(store => store.movieDetails);
+    const movieGenres = useSelector(store=> store.genres);
+    console.log(movieGenres);
+
     // send requests to index.js to retrieve:    
         // 1. all the data from the movies table for given id
         // 2. all the genres for the movie
-    const movieId  = Number(params.id);
+    const movieId  = params.id;
     useEffect(()=> {
         dispatch({
             type: 'SAGA_GET_DETAILS',
             payload: movieId
         })
+        dispatch({
+            type: 'SAGA_GET_GENRES',
+            payload: movieId
+        })
         return()=> {
             dispatch({
                 type: 'CLEAR_DETAILS'
+            })
+            dispatch({
+                type: 'CLEAR_GENRES'
             })
         }
     },[movieId])
@@ -42,14 +53,18 @@ export default function MovieDetails(){
                 <Typography className="detailsText" variant="subtitle1" color="text.secondary" component="div">
                     {movieDetails.description}
                 </Typography>
-                <Typography className="genres" variant="h6" color="text.secondary" component="div">
-                    Genres:
+                <Typography variant="subtitle1" color="text.secondary" component="div">
+                    Genres: 
+                    <div className="genres">
+                        {movieGenres.map(genre=> (
+                            <p className="genre">{genre.name}</p>
+                        ))}
+                    </div>
                 </Typography>
                 </CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
                 </Box>
             </Box>
-        
         </Card>
     )
 }

@@ -55,7 +55,7 @@ router.post('/', (req, res) => {
 
 router.get('/:id', (req, res)=> {
   const movieId = req.params.id;
-  console.log(movieId);
+  // console.log(movieId);
 
   const sqlQuery = `
       SELECT * FROM movies

@@ -42,12 +42,29 @@ function* getMovieDetails(action){
     }
 }
 
+function* getMovieGenres(action){
+    const movieId = action.payload;
+    try{ const movieGenres = yield axios({
+        method: 'GET',
+        url: `/api/genre/${movieId}`
+    })
+        yield put({
+            type: 'SET_GENRES',
+            payload: movieGenres.data
+        })
+
+    }catch {
+        console.log('get genres error');
+    }
+}
+
 
 
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
     yield takeEvery('SAGA_GET_DETAILS', getMovieDetails);
+    yield takeEvery('SAGA_GET_GENRES', getMovieGenres)
 }
 
 // Used to store movies returned from the server
@@ -71,15 +88,19 @@ const movieDetails = (state = {}, action)=> {
     }
 }
         
-        
-// Used to store the movie genres
+//data from server: [ { name: 'Adventure' }, { name: 'Biographical' }, { name: 'Comedy' } ]
 const genres = (state = [], action) => {
+    const genres = action.payload;
+    // convert array of objects to an array with just the genre names:
+    
     switch (action.type) {
         case 'SET_GENRES':
             return action.payload;
-            default:
-                return state;
-            }
+        case 'CLEAR_GENRES':
+            return [];
+        default:
+            return state;
+        }
 }
         
 // Create sagaMiddleware
