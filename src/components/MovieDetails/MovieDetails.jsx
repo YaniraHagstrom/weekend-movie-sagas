@@ -16,7 +16,7 @@ export default function MovieDetails(){
     // send requests to index.js to retrieve:    
         // 1. all the data from the movies table for given id
         // 2. all the genres for the movie
-    const movieId  = params.id;
+    const movieId  = Number(params.id);
     useEffect(()=> {
         dispatch({
             type: 'SAGA_GET_DETAILS',

@@ -27,14 +27,15 @@ function* fetchAllMovies() {
 }
 
 function* getMovieDetails(action){
-    const movieId = action.payload
+    const movieId = action.payload;
     try{
         const movieDetails = yield axios({
             method: 'GET',
             url: `/api/movie/${movieId}`
         })
+    }catch {
+        console.log('get details error');
     }
-
 }
 
 
@@ -61,6 +62,8 @@ const movieDetails = (state = {}, action)=> {
             return action.payload
         case 'CLEAR_DETAILS':
             return {};
+        default:
+            return state;
     }
 }
         

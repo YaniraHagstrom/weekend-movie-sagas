@@ -53,4 +53,23 @@ router.post('/', (req, res) => {
   })
 })
 
+router.get('/:id', (req, res)=> {
+  const movieId = req.params.id;
+  console.log(movieId);
+
+  const sqlQuery = `
+      SELECT * FROM movies
+        WHERE id= $1;
+    `
+
+  const sqlValues = [movieId]
+  pool.query(sqlQuery, sqlValues)
+      .then( dbRes=> {
+        res.send(dbRes.rows);
+      }).catch(err => {
+        console.log('error in GET /api/movie/:id',err);
+        res.sendStatus(500)
+      })
+})
+
 module.exports = router;
