@@ -36,9 +36,9 @@ function App() {
           <Route path="/movielist" exact>
             <MovieList />
           </Route>
-          {/* <Route path="/details/:id" exact>
+          <Route path="/details/:id" exact>
             <MovieDetails />
-          </Route> */}
+          </Route>
 
           {/* Add Movie page */}
         </Router>
