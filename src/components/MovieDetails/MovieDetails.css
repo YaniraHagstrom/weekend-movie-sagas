@@ -34,3 +34,11 @@ img {
     padding-left: 15px;
     margin-top: 25px;
 }
+
+.backButton {
+    justify-content: left;
+}
+
+a {
+    text-decoration: none;
+}

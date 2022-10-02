@@ -3,6 +3,7 @@ import './App.css';
 import MovieList from '../MovieList/MovieList'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MovieDetails from '../MovieDetails/MovieDetails';
+import MovieForm from '../MovieForm/MovieForm';
 
 function App() {
 
@@ -39,8 +40,9 @@ function App() {
           <Route path="/details/:id" exact>
             <MovieDetails />
           </Route>
-
-          {/* Add Movie page */}
+          <Route path="/movieform" exact>
+            <MovieForm />
+          </Route>
         </Router>
       </ThemeProvider>
     </div>
