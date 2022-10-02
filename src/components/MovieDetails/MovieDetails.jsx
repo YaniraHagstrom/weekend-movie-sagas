@@ -17,18 +17,28 @@ export default function MovieDetails(){
     const dispatch = useDispatch();
     const params = useParams();
     const movieDetails = useSelector(store => store.movieDetails);
+    const movieGenres = useSelector(store=> store.genres);
+    console.log(movieGenres);
+
     // send requests to index.js to retrieve:    
         // 1. all the data from the movies table for given id
         // 2. all the genres for the movie
-    const movieId  = Number(params.id);
+    const movieId  = params.id;
     useEffect(()=> {
         dispatch({
             type: 'SAGA_GET_DETAILS',
             payload: movieId
         })
+        dispatch({
+            type: 'SAGA_GET_GENRES',
+            payload: movieId
+        })
         return()=> {
             dispatch({
                 type: 'CLEAR_DETAILS'
+            })
+            dispatch({
+                type: 'CLEAR_GENRES'
             })
         }
     },[movieId])
@@ -39,6 +49,16 @@ export default function MovieDetails(){
             <Card  sx={{ display: 'flex'}}>
                 <Box className="poster" sx={{ display: 'flex', flexDirection: 'column'}}>
                 <img src={movieDetails.poster}/>
+                    <Box className="genres">
+                        <Typography className="genreTitle" variant="subtitle1"  component="div">
+                            Genres: 
+                            <div className="genreNames">
+                                {movieGenres.map(genre=> (
+                                    <p >{genre.name}</p>
+                                ))}
+                            </div>
+                        </Typography>
+                    </Box>
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                     <CardContent sx={{ flex: '1 0 auto' }}>
@@ -47,9 +67,6 @@ export default function MovieDetails(){
                     </Typography>
                     <Typography className="detailsText" variant="subtitle1" color="text.secondary" component="div">
                         {movieDetails.description}
-                    </Typography>
-                    <Typography className="genres" variant="h6" color="text.secondary" component="div">
-                        Genres: {}
                     </Typography>
                     </CardContent>
                 </Box>
