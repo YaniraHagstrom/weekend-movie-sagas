@@ -2,6 +2,24 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool')
 
+router.get('/', (req, res)=> {
+  const sqlQuery = `
+    SELECT * FROM genres;
+  `
+  pool.query(sqlQuery)
+      .then(dbRes=> {
+        console.log('all genres from db:',dbRes.rows);
+        // all genres from db: [
+        //   { id: 1, name: 'Adventure' },
+        //   { id: 2, name: 'Animated' }, {}...]
+        res.send(dbRes.rows)
+      }).catch(err => {
+        console.log('error in GET /api/genre',err);
+        res.sendStatus(500)
+      })
+})
+
+
 router.get('/:id', (req, res) => {
   const movieId = req.params.id;
 
@@ -20,7 +38,7 @@ router.get('/:id', (req, res) => {
         // [ { name: 'Adventure' }, { name: 'Biographical' }, { name: 'Comedy' } ]
         res.send(dbRes.rows);
       }).catch(err => {
-        console.log('error in GET /api/movie/:id',err);
+        console.log('error in GET /api/genre/:id',err);
         res.sendStatus(500)
       })
 });

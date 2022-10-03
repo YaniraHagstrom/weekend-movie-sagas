@@ -58,13 +58,29 @@ function* getMovieGenres(action){
     }
 }
 
+function* getAllGenres(){
+    try{
+        const allGenres = yield axios({
+            method: 'GET',
+            url: '/api/genre'
+        })
+        yield put({
+            type: 'SET_ALL_GENRES',
+            payload: allGenres.data
+        })
+    }catch {
+        console.log('get all genres error');
+    }
+}
+
 
 
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
     yield takeEvery('SAGA_GET_DETAILS', getMovieDetails);
-    yield takeEvery('SAGA_GET_GENRES', getMovieGenres)
+    yield takeEvery('SAGA_GET_GENRES', getMovieGenres);
+    yield takeEvery('SAGA_GET_ALL_GENRES', getAllGenres);
 }
 
 // Used to store movies returned from the server
@@ -88,6 +104,15 @@ const movieDetails = (state = {}, action)=> {
     }
 }
         
+const allGenres = (state=[], action)=> {
+    switch (action.type){
+        case 'SET_ALL_GENRES':
+            return action.payload
+        default:
+            return state;
+    }
+}
+
 //data from server: [ { name: 'Adventure' }, { name: 'Biographical' }, { name: 'Comedy' } ]
 const genres = (state = [], action) => {
     const genres = action.payload;
@@ -112,6 +137,7 @@ const storeInstance = createStore(
         movies,
         genres,
         movieDetails,
+        allGenres
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
